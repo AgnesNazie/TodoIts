@@ -1,18 +1,23 @@
 package se.Lexicon.models;
 
+import java.util.Objects;
+
 public class Person {
     //create fields
     private int id;
     private String firstName;
     private String lastName;
     private String email;
+    // New field to store the credentials (AppUser)
+    private AppUser credentials;
 
     //create parameterized constructor without id
-    public Person(String firstName, String lastName, String email) {
+    public Person(String firstName, String lastName, String email, AppUser credentials) {
         this.id = id;
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
+        this.credentials = credentials;
     }
     // create parameterized constructor with id
 
@@ -64,13 +69,38 @@ public class Person {
             throw new IllegalArgumentException("Email cannot be null or empty");
         this.email = email;
     }
-    // get summary method
+    //getter for credentials
 
-    public String getSummary() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("id: ").append(id)
-                .append(", Name: ").append(firstName).append(" ").append(lastName)
-                .append(", Email: ").append(email);
-        return sb.toString();
+    public AppUser getCredentials() {
+        return credentials;
     }
+    // setter for credentials
+
+    public void setCredentials(AppUser credentials) {
+        this.credentials = credentials;
+    }
+    // Overriding the toString() method to exclude credentials
+    @Override
+    public String toString() {
+        return String.format("Person{id=%d, firstName='%s', lastName='%s', email='%s'}", id, firstName, lastName, email);
+    }
+
+    // Overriding equals() and hashCode() to exclude credentials
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return id == person.id &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(email, person.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email);
+    }
+
 }

@@ -1,5 +1,7 @@
 package se.Lexicon.models;
 
+import java.util.Objects;
+
 public class TodoItemTask {
     //create fields
     private int id;
@@ -9,7 +11,7 @@ public class TodoItemTask {
 
     //constructor without id and assigned
 
-    public TodoItemTask( TodoItem todoItem, Person assignee) {
+    public TodoItemTask(TodoItem todoItem, Person assignee) {
         this.id = id;
         this.assigned = assignee != null;
         setTodoItem(todoItem);
@@ -56,16 +58,30 @@ public class TodoItemTask {
         this.assigned = (assignee != null);
     }
 
-    // get summary method
-    public String getSummary() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("TodoItemTask {")
-                .append("id: ").append(id)
-                .append(", Assigned=: ").append(assigned)
-                .append(", TodoItem: ").append(todoItem.getSummary())
-                .append(", Assignee= ").append(assignee != null ? assignee.getFirstName() + assignee.getLastName() : "None")
-                .append('}');
-        return sb.toString();
+    // override toString() without Person object (assignee)
+    @Override
+    public String toString() {
+        return String.format("TodoItemTask{id=%d, assigned=%b, todoItemTitle='%s'}",
+                id, assigned, todoItem != null ? todoItem.getTitle() : "None");
     }
 
+    // override to equals() without Person object (assignee)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TodoItemTask)) return false;
+        TodoItemTask that = (TodoItemTask) o;
+        return id == that.id &&
+                assigned == that.assigned &&
+                Objects.equals(todoItem, that.todoItem);
+    }
+
+    // hashCode() without Person object (assignee)
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, assigned, todoItem);
+    }
 }
+
+
+
