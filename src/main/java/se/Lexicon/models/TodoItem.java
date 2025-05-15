@@ -11,19 +11,9 @@ public class TodoItem {
     boolean done;
     Person creator;
 
-    //constructor with id
-
-    public TodoItem(int id, String title, String taskDescription, LocalDate deadLine, boolean done, Person creator) {
-        this.id = id;
-        setTitle(title);
-        setTaskDescription(taskDescription);
-        setDeadLine(deadLine);
-        setDone(done);
-        setCreator(creator);
-    }
     //constructor without id
 
-    public TodoItem(String title, String taskDescription, LocalDate deadLine, boolean done, Person creator) {
+    public TodoItem(String title, String taskDescription, LocalDate deadLine, Person creator) {
         this.id = id;
         setTitle(title);
         setTaskDescription(taskDescription);
