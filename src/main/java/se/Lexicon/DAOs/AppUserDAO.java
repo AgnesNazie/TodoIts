@@ -8,7 +8,7 @@ import java.util.Collections;
 public interface AppUserDAO {
     AppUser persist(AppUser appUser);
 
-    AppUser findByUserName(AppUser username);
+    AppUser findByUsername(String username);
 
     Collection<AppUser> findAll();
 
