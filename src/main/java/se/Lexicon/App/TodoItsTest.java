@@ -6,7 +6,7 @@ import se.Lexicon.models.TodoItemTask;
 
 import java.time.LocalDate;
 
-public class TodoItsPart1Test {
+public class TodoItsTest {
     public static void main(String[] args) {
 
         // create a person object
