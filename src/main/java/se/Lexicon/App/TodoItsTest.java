@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import static se.Lexicon.models.AppRole.ROLE_APP_ADMIN;
 import static se.Lexicon.models.AppRole.ROLE_APP_USER;
 
-public class TodoItsPartTest {
+public class TodoItsTest {
     public static void main(String[] args) {
         // create a person object
         // Create AppUser credentials
