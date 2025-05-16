@@ -1,5 +1,7 @@
 package se.Lexicon.models;
 
+import se.Lexicon.Exception.InvalidPersonException;
+
 import java.util.Objects;
 
 public class Person {
@@ -42,7 +44,7 @@ public class Person {
 
     public void setFirstName(String firstName) {
         if (firstName == null || firstName.trim().isEmpty())
-            throw new IllegalArgumentException("First Name cannot be Null or Empty");
+            throw new InvalidPersonException("First Name cannot be Null or Empty");
         this.firstName = firstName;
     }
     //getter for last name
@@ -54,7 +56,7 @@ public class Person {
 
     public void setLastName(String lastName) {
         if (lastName == null || lastName.trim().isEmpty())
-            throw new IllegalArgumentException("Last Name cannot be null or empty");
+            throw new InvalidPersonException("Last Name cannot be null or empty");
         this.lastName = lastName;
     }
     //getter for email
@@ -66,7 +68,7 @@ public class Person {
 
     public void setEmail(String email) {
         if (email == null || email.trim().isEmpty())
-            throw new IllegalArgumentException("Email cannot be null or empty");
+            throw new InvalidPersonException("Email cannot be null or empty");
         this.email = email;
     }
     //getter for credentials
@@ -77,8 +79,11 @@ public class Person {
     // setter for credentials
 
     public void setCredentials(AppUser credentials) {
+        if (credentials == null)
+            throw new InvalidPersonException("Credentials cannot be null");
         this.credentials = credentials;
     }
+
     // Overriding the toString() method to exclude credentials
     @Override
     public String toString() {
