@@ -1,5 +1,7 @@
 package se.Lexicon.models;
 
+import se.Lexicon.Exception.TodoItemException.InvalidTodoItemException;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -36,7 +38,7 @@ public class TodoItem {
 
     public void setTitle(String title) {
         if (title == null || title.trim().isEmpty())
-            throw new IllegalArgumentException("Title cannot be null or empty");
+            throw new InvalidTodoItemException("Title cannot be null or empty");
         this.title = title;
     }
     //getter for task description
@@ -58,7 +60,7 @@ public class TodoItem {
 
     public void setDeadLine(LocalDate deadLine) {
         if (deadLine == null || deadLine.isBefore(LocalDate.now()))
-            throw new IllegalArgumentException("Deadline cannot be null or in the past");
+            throw new InvalidTodoItemException("Deadline cannot be null or in the past");
 
         this.deadLine = deadLine;
     }
@@ -81,7 +83,7 @@ public class TodoItem {
 
     public void setCreator(Person creator) {
         if (creator == null)
-            throw new IllegalArgumentException("Creator cannot be null");
+            throw new InvalidTodoItemException("Creator cannot be null");
         this.creator = creator;
     }
 
