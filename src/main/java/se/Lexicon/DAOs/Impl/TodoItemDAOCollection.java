@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TodoItemDaoCollection implements TodoItemDAO {
+public class TodoItemDAOCollection implements TodoItemDAO {
     //create a list to store app user object
     private final List<TodoItem> todoItems = new ArrayList<>();
 
@@ -48,7 +48,7 @@ public class TodoItemDaoCollection implements TodoItemDAO {
     }
 
     @Override
-    public Collection<TodoItem> findAllByDone(boolean done) {
+    public Collection<TodoItem> findAllByDoneStatus(boolean done) {
         List<TodoItem> result = todoItems.stream()
                 .filter(item -> item.isDone() == done)
                 .collect(Collectors.toList());

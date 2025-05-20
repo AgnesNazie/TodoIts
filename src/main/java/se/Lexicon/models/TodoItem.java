@@ -24,6 +24,7 @@ public class TodoItem {
         setDeadLine(deadLine);
         setDone(done);
         setCreator(creator);
+        this.done = false;
     }
     //getter for id
 

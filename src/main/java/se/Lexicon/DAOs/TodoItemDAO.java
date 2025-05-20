@@ -12,7 +12,7 @@ public interface TodoItemDAO {
 
     Collection<TodoItem> findAll();
 
-    Collection<TodoItem> findAllByDone(boolean done);
+    Collection<TodoItem> findAllByDoneStatus(boolean done);
 
     Collection<TodoItem> findByTitleContains(String title);
 
@@ -23,5 +23,6 @@ public interface TodoItemDAO {
     Collection<TodoItem> findByDeadLineAfter(LocalDate date);
 
     void remove(Integer id);
+
 
 }
