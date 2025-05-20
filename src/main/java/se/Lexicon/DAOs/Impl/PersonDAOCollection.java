@@ -1,6 +1,9 @@
 package se.Lexicon.DAOs.Impl;
 
 import se.Lexicon.DAOs.PersonDAO;
+import se.Lexicon.Exception.PersonException.InvalidPersonException;
+import se.Lexicon.Exception.PersonException.PersonAlreadyExistsException;
+import se.Lexicon.Exception.PersonException.PersonNotFoundException;
 import se.Lexicon.models.Person;
 
 import java.util.ArrayList;
@@ -14,6 +17,15 @@ public class PersonDAOCollection implements PersonDAO {
 
     @Override
     public Person persist(Person person) {
+        if (person == null || person.getEmail() == null || person.getEmail().trim().isEmpty()) {
+            throw new InvalidPersonException("Invalid Person: email must not be null or empty.");
+        }
+
+        boolean exists = personList.stream()
+                .anyMatch(p -> p.getEmail().equalsIgnoreCase(person.getEmail()));
+        if (exists) {
+            throw new PersonAlreadyExistsException("Person with email " + person.getEmail() + " already exists.");
+        }
         personList.add(person);
         return person;
 
@@ -21,22 +33,18 @@ public class PersonDAOCollection implements PersonDAO {
 
     @Override
     public Person findById(Integer id) {
-        for (Person person : personList) {
-            if (person.getId() == id) {
-                return person;
-            }
-        }
-        return null;
+        return personList.stream()
+                .filter(person -> person.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new PersonNotFoundException(id));
     }
 
     @Override
     public Person findByEmail(String email) {
-        for (Person person : personList) {
-            if (person.getEmail().equalsIgnoreCase(email)) {
-                return person;
-            }
-        }
-        return null;
+        return personList.stream()
+                .filter(person -> person.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElseThrow(() -> new PersonNotFoundException(email));
     }
 
     @Override

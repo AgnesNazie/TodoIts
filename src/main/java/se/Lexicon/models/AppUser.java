@@ -1,5 +1,7 @@
 package se.Lexicon.models;
 
+import se.Lexicon.Exception.AppuserException.InvalidAppUserException;
+
 import java.util.Objects;
 
 public class AppUser {
@@ -24,7 +26,7 @@ public class AppUser {
 
     public void setUsername(String username) {
         if (username == null || username.trim().isEmpty())
-            throw new IllegalArgumentException("User Name cannot be null or empty");
+            throw new InvalidAppUserException("User Name cannot be null or empty");
         this.username = username;
     }
     // getter for password
@@ -36,7 +38,7 @@ public class AppUser {
 
     public void setPassword(String password) {
         if (password == null || password.trim().isEmpty())
-            throw new IllegalArgumentException("Password cannot be null or empty");
+            throw new InvalidAppUserException("Password cannot be null or empty");
         this.password = password;
     }
     // getter for role
@@ -48,7 +50,7 @@ public class AppUser {
 
     public void setRole(AppRole role) {
         if (role == null)
-            throw new IllegalArgumentException("Role cannot be null");
+            throw new InvalidAppUserException("Role cannot be null");
         this.role = role;
     }
     //Overriding equals method to compare AppUser objects based on username and role

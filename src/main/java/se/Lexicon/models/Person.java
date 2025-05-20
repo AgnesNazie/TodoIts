@@ -1,6 +1,6 @@
 package se.Lexicon.models;
 
-import se.Lexicon.Exception.InvalidPersonException;
+import se.Lexicon.Exception.PersonException.InvalidPersonException;
 
 import java.util.Objects;
 
