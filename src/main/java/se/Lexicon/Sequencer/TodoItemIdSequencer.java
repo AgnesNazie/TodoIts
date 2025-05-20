@@ -11,7 +11,7 @@ public class TodoItemIdSequencer {
         return currentId;
     }
 
-    public void SetCurrentId(int id) {
+    public static void SetCurrentId(int id) {
         currentId = id;
 
     }

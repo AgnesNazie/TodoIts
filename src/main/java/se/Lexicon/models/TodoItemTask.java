@@ -1,5 +1,8 @@
 package se.Lexicon.models;
 
+import se.Lexicon.Exception.TodoItemTaskException.InvalidTodoItemTaskException;
+import se.Lexicon.Sequencer.TodoItemTaskIdSequencer;
+
 import java.util.Objects;
 
 public class TodoItemTask {
@@ -12,7 +15,7 @@ public class TodoItemTask {
     //constructor without id and assigned
 
     public TodoItemTask(TodoItem todoItem, Person assignee) {
-        this.id = id;
+        this.id = TodoItemTaskIdSequencer.nextId();
         this.assigned = assignee != null;
         setTodoItem(todoItem);
         setAssignee(assignee);
@@ -23,6 +26,8 @@ public class TodoItemTask {
     public int getId() {
         return id;
     }
+
+
     // getter for isAssigned
 
     public boolean isAssigned() {
@@ -43,7 +48,7 @@ public class TodoItemTask {
 
     public void setTodoItem(TodoItem todoItem) {
         if (todoItem == null)
-            throw new IllegalArgumentException("TodoItem cannot be null");
+            throw new InvalidTodoItemTaskException("TodoItem cannot be null");
         this.todoItem = todoItem;
     }
     // getter for assignee

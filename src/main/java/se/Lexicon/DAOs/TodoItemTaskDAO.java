@@ -5,7 +5,7 @@ import se.Lexicon.models.TodoItemTask;
 import java.util.Collection;
 
 public interface TodoItemTaskDAO {
-    TodoItemDAO persist(TodoItemTask todoItemTask);
+    TodoItemTask persist(TodoItemTask todoItemTask);
 
     TodoItemTask findById(Integer id);
 

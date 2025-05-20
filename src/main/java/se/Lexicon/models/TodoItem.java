@@ -1,6 +1,7 @@
 package se.Lexicon.models;
 
 import se.Lexicon.Exception.TodoItemException.InvalidTodoItemException;
+import se.Lexicon.Sequencer.TodoItemTaskIdSequencer;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class TodoItem {
     //constructor without id
 
     public TodoItem(String title, String taskDescription, LocalDate deadLine, Person creator) {
-        this.id = id;
+        this.id = TodoItemTaskIdSequencer.nextId();
         setTitle(title);
         setTaskDescription(taskDescription);
         setDeadLine(deadLine);

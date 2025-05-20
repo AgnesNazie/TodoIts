@@ -1,6 +1,7 @@
 package se.Lexicon.models;
 
 import se.Lexicon.Exception.PersonException.InvalidPersonException;
+import se.Lexicon.Sequencer.PersonIdSequencer;
 
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class Person {
 
     //create parameterized constructor without id
     public Person(String firstName, String lastName, String email, AppUser credentials) {
-        this.id = id;
+        this.id = PersonIdSequencer.nextId();
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
@@ -24,7 +25,7 @@ public class Person {
     // create parameterized constructor with id
 
     public Person(int id, String firstName, String lastName, String email) {
-        this.id = id;
+        this.id = PersonIdSequencer.nextId();
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
