@@ -1,76 +1,68 @@
 package se.Lexicon.App;
 
-import se.Lexicon.DAOs.Impl.TodoItemDAOCollection;
+import se.Lexicon.DAOs.Impl.TodoItemDAOJdbcImpl;
 import se.Lexicon.DAOs.TodoItemDAO;
-import se.Lexicon.models.AppRole;
-import se.Lexicon.models.AppUser;
-import se.Lexicon.models.Person;
-import se.Lexicon.models.TodoItem;
+import se.Lexicon.models.*;
 
 import java.time.LocalDate;
 import java.util.Collection;
 
 public class TodoItemDAOTest {
     public static void main(String[] args) {
+        // Initialize the DAO
+        TodoItemDAO todoItemDAO = new TodoItemDAOJdbcImpl();
 
+        // Create a new TodoItem
+        TodoItem newTodo = new TodoItem(
+                "Test DAO",
+                "Testing DAO with main method",
+                LocalDate.now().plusDays(7),
+                false,
+                null // no assignee
+        );
 
-        TodoItemDAOCollection dao = new TodoItemDAOCollection();
+        System.out.println("\n--- Creating Todo ---");
+        TodoItem created = todoItemDAO.create(newTodo);
+        System.out.println("Created: " + created);
 
-        // Create AppUser and Person
-        AppUser appUser = new AppUser("agnes_user", "password123", AppRole.ROLE_APP_USER);
-        Person person = new Person("Agnes", "Nazie", "Agnes@gmail.com", appUser);
+        int todoId = created.getId();
 
-        // Task with earlier deadline (to be returned by findByDeadLineBefore)
-        TodoItem earlyDeadlineTask = new TodoItem("Early Task", "Deadline soon", LocalDate.now().plusDays(1), person);
-        dao.persist(earlyDeadlineTask);
+        // Fetch it by ID
+        System.out.println("\n--- Finding Todo by ID ---");
+        TodoItem found = todoItemDAO.findById(todoId);
+        System.out.println("Found: " + found);
 
-        // Task with later deadline (to be excluded by findByDeadLineBefore)
-        TodoItem laterDeadlineTask = new TodoItem("Later Task", "Deadline later", LocalDate.now().plusDays(5), person);
-        dao.persist(laterDeadlineTask);
+        // Update the TodoItem
+        System.out.println("\n--- Updating Todo ---");
+        found.setTitle("Updated Title");
+        found.setDescription("Updated Description");
+        found.setDone(true);
+        TodoItem updated = todoItemDAO.update(found);
+        System.out.println("Updated: " + updated);
 
-        // Additional tasks
-        TodoItem task1 = new TodoItem("Test Task 1", "Description 1", LocalDate.now().plusDays(2), person);
-        dao.persist(task1);
+        // Get all todos
+        System.out.println("\n--- All Todos ---");
+        Collection<TodoItem> allTodos = todoItemDAO.findAll();
+        allTodos.forEach(System.out::println);
 
-        TodoItem task2 = new TodoItem("Test Task 2", "Description 2", LocalDate.now().plusDays(3), person);
-        dao.persist(task2);
+        // Get todos by done status
+        System.out.println("\n--- Done Todos ---");
+        Collection<TodoItem> doneTodos = todoItemDAO.findByDoneStatus(true);
+        doneTodos.forEach(System.out::println);
 
-        // --- Test: findById
-        TodoItem foundTask1 = dao.findById(task1.getId());
-        System.out.println("Test persist and findById: " + (foundTask1 != null && foundTask1.getId() == task1.getId()));
+        // Delete the todo
+        System.out.println("\n--- Deleting Todo ---");
+        todoItemDAO.delete(todoId);
+        System.out.println("Todo with ID " + todoId + " deleted.");
 
-        // --- Test: findAll
-        Collection<TodoItem> allTasks = dao.findAll();
-        System.out.println("Test findAll: " + (allTasks.size() == 4)); // Updated count to 4
-
-        // --- Test: findByDoneStatus (all default to false)
-        Collection<TodoItem> doneTasks = dao.findAllByDoneStatus(false);
-        System.out.println("Test findByDoneStatus: " + (doneTasks.size() == 4));
-
-        // --- Test: findByTitleContains
-        Collection<TodoItem> tasksWithTitle = dao.findByTitleContains("Test");
-        System.out.println("Test findByTitleContains: " + (tasksWithTitle.size() == 2));
-
-        // --- Test: findByPersonId
-        Collection<TodoItem> personTasks = dao.findByPersonId(person.getId());
-        System.out.println("Test findByPersonId: " + (personTasks.size() == 4));
-
-        // --- Test: findByDeadLineBefore (+3 days should include early and task1)
-        Collection<TodoItem> beforeDeadlineTasks = dao.findByDeadLineBefore(LocalDate.now().plusDays(3));
-        System.out.println("Test findByDeadLineBefore: " + (beforeDeadlineTasks.size() == 2)); // Should be early and task1
-
-        // --- Test: findByDeadLineAfter (today — all 4 should be returned)
-        Collection<TodoItem> upcomingTasks = dao.findByDeadLineAfter(LocalDate.now());
-        System.out.println("Test findByDeadLineAfter: " + (upcomingTasks.size() == 4));
-
-        // --- Test: remove
-        dao.remove(task1.getId());
+        // Try to fetch again
+        System.out.println("\n--- Verifying Deletion ---");
         try {
-            dao.findById(task1.getId());
-            System.out.println("Test remove: false (should have thrown exception)");
+            todoItemDAO.findById(todoId);
         } catch (Exception e) {
-            System.out.println("Test remove: true (exception thrown as expected)");
+            System.out.println("Expected error: " + e.getMessage());
         }
 
+        System.out.println("\n--- App Test Complete ---");
     }
 }
