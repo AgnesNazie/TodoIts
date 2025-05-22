@@ -23,6 +23,9 @@ public class Person {
         this.lastName = lastName;
     }
 
+    public Person(int assigneeId) {
+    }
+
     //getters
 
     public int getPersonId() {

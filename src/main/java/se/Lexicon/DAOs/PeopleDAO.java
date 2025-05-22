@@ -4,7 +4,7 @@ import se.Lexicon.Model.Person;
 
 import java.util.Collection;
 
-public interface People {
+public interface PeopleDAO {
     Person create(Person person);
 
     Collection<Person> findAll();
@@ -14,4 +14,6 @@ public interface People {
     Collection<Person> findByName(String name);
 
     Person update(Person person);
+
+    boolean deleteById(int id);
 }

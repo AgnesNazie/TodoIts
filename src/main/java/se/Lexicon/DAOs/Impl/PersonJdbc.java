@@ -1,10 +1,9 @@
 package se.Lexicon.DAOs.Impl;
 
-import se.Lexicon.DAOs.People;
+import se.Lexicon.DAOs.PeopleDAO;
 import se.Lexicon.Exception.DataBaseException;
 import se.Lexicon.Model.Person;
 
-import javax.xml.stream.events.DTD;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +11,7 @@ import java.util.List;
 
 import static se.Lexicon.Utils.DBConnection.getConnection;
 
-public class PersonJdbc implements People {
+public class PersonJdbc implements PeopleDAO {
     @Override
     public Person create(Person person) {
         String sql = " INSERT INTO person ( first_name, last_name) VALUES (?,?) ";
@@ -140,5 +139,21 @@ public class PersonJdbc implements People {
             throw new DataBaseException("Database error" + e.getMessage() + e);
         }
 
+    }
+
+    @Override
+    public boolean deleteById(int id) {
+        String sql = "DELETE FROM person WHERE person_id = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+            statement.setInt(1, id);
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new DataBaseException("Failed to delete person with ID: " + id + " → " + e.getMessage(), e);
+        }
     }
 }
