@@ -1,5 +1,7 @@
 package se.Lexicon.DAOs.Impl;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import se.Lexicon.DAOs.AppUserDAO;
 import se.Lexicon.Exception.AppuserException.AppUserNotFoundException;
 import se.Lexicon.Exception.AppuserException.InvalidAppUserException;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Component(value = "AppUserDAO")
 public class AppUserDAOCollection implements AppUserDAO {
     //create a list to store app user object
     private final List<AppUser> users = new ArrayList<>();

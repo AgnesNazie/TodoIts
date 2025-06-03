@@ -1,5 +1,7 @@
 package se.Lexicon.DAOs.Impl;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import se.Lexicon.DAOs.PersonDAO;
 import se.Lexicon.Exception.PersonException.InvalidPersonException;
 import se.Lexicon.Exception.PersonException.PersonAlreadyExistsException;
@@ -9,6 +11,7 @@ import se.Lexicon.models.Person;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+@Component(value = "PersonDao")
 
 public class PersonDAOCollection implements PersonDAO {
 

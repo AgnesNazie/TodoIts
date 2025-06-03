@@ -1,5 +1,7 @@
 package se.Lexicon.DAOs.Impl;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import se.Lexicon.DAOs.TodoItemTaskDAO;
 import se.Lexicon.Exception.TodoItemTaskException.InvalidTodoItemTaskException;
 import se.Lexicon.Exception.TodoItemTaskException.TodoItemTaskAlreadyExistsException;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+@Component(value = "TodoItemTaskDAO")
 
 public class TodoItemTaskDAOCollection implements TodoItemTaskDAO {
     private final List<TodoItemTask> todoItemTasks = new ArrayList<>();

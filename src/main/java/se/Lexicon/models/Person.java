@@ -14,6 +14,13 @@ public class Person {
     // New field to store the credentials (AppUser)
     private AppUser credentials;
 
+    public Person(String firstName, String lastName, String email){
+        this.id = PersonIdSequencer.nextId();
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+    }
+
     //create parameterized constructor without id
     public Person(String firstName, String lastName, String email, AppUser credentials) {
         this.id = PersonIdSequencer.nextId();

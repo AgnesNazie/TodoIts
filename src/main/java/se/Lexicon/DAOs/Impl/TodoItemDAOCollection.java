@@ -1,6 +1,8 @@
 package se.Lexicon.DAOs.Impl;
 
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import se.Lexicon.DAOs.TodoItemDAO;
 import se.Lexicon.Exception.TodoItemException.InvalidTodoItemException;
 import se.Lexicon.Exception.TodoItemException.TodoItemAlreadyExistsException;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+@Component(value ="TodoItemDAO")
 
 public class TodoItemDAOCollection implements TodoItemDAO {
     //create a list to store app user object
